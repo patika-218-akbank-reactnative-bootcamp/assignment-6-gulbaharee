@@ -12,9 +12,10 @@ const SignIn = () => {
   const auth = getAuth();
 
   const handleSubmit = () => {
+    //firebase authentication
     signInWithEmailAndPassword(auth,email, password)
       .then(() => {
-        console.log("success");
+        //navigate('');
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {

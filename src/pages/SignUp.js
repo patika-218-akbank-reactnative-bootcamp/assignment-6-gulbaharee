@@ -11,6 +11,7 @@ const SignUp = () => {
   const auth = getAuth();
 
   const handleSubmit = () => {
+    //firebase authentication
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
