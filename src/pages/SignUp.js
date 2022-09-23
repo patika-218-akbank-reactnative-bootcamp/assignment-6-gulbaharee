@@ -3,21 +3,30 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Input from "../components/input";
 import Button from "../components/button";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, collection, setDoc, doc } from "firebase/firestore/lite";
+import { app } from "../utils/firebase";
+import { useNavigation } from "@react-navigation/native";
 
 const screenHeight = Dimensions.get("screen").height;
 
 const SignUp = () => {
-
-  const auth = getAuth();
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const { navigate } = useNavigation();
 
   const handleSubmit = () => {
     //firebase authentication
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+      .then(async (response) => {
+        await setDoc(doc(db, "users", response.user.uid), {
+          email: email,
+          password: password,
+          username: username,
+        });
+        navigate("Sign In");
       })
 
-      .catch((error) => alert(error.message));
+      .catch((error) => console.log(error.message));
   };
 
   return (
@@ -33,6 +42,7 @@ const SignUp = () => {
           onChangeText={(text) => (password = text)}
         />
         <Button placeholder="Sign Up" onPress={handleSubmit} />
+        <Button placeholder="Sign In" onPress={()=>navigate('Sign In')} />
       </View>
     </View>
   );

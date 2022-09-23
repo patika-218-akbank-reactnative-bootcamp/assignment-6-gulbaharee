@@ -4,7 +4,7 @@ import { themeSlice } from "./themeSlice";
 
 export const store = configureStore({
   reducer: combineReducers({
-    user: userSlice.reducer,
+    activeUser: userSlice.reducer,
     theme:themeSlice.reducer,
   }),
 });

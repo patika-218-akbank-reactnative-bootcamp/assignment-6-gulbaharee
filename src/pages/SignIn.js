@@ -7,25 +7,28 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import {app} from '../utils/firebase';
 import {useSelector,useDispatch } from 'react-redux';
 import { setUser } from "../store/userSlice";
+import {doc, getDoc,getFirestore} from 'firebase/firestore';
 
 const screenHeight = Dimensions.get("screen").height;
 
 const SignIn = () => {
   const { navigate } = useNavigation();
   const auth = getAuth(app);
-
+  const db = getFirestore(app);
   const dispatch = useDispatch();
-  const user = useSelector(state=>state.user.registeredUser);
+  const activeUser = useSelector(state=>state.activeUser.registeredUser);
 
   const handleSubmit = () => {
-    const user={
-      login:'loggedIn',
-      email,
-      password,
-    };
+    
     //firebase authentication
     signInWithEmailAndPassword(auth,email, password)
-      .then(() => {
+      .then(async response=> {
+        const userRef=await getDoc(doc(db,'users',response.user.uid));
+        if(userRef.exists()){
+          console.log(userRef.data());
+          dispatch(setUser(userRef.data()));
+          console.log(activeUser);
+        }
         navigate('Home');
       })
       .catch((error) => {
@@ -40,7 +43,7 @@ const SignIn = () => {
         console.error(error);
       });
       
-      console.log(user.login);
+      
   };
 
   return (
