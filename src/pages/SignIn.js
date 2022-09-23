@@ -4,18 +4,19 @@ import Input from "../components/input";
 import Button from "../components/button";
 import { useNavigation } from "@react-navigation/native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {app} from '../utils/firebase';
 
 const screenHeight = Dimensions.get("screen").height;
 
 const SignIn = () => {
   const { navigate } = useNavigation();
-  const auth = getAuth();
+  const auth = getAuth(app);
 
   const handleSubmit = () => {
     //firebase authentication
     signInWithEmailAndPassword(auth,email, password)
       .then(() => {
-        //navigate('');
+        navigate('Home');
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
