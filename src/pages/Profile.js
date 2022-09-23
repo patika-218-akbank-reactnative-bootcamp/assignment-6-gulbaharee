@@ -7,8 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import {useSelector } from 'react-redux';
 const Profile = () => {
   const { navigate } = useNavigation();
-  const user = useSelector(state=>state.user.registeredUser);
-  console.log(user);
+  
   return (
     <View>
       <Header title="Profile" />

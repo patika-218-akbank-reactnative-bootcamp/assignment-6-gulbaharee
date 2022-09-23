@@ -26,7 +26,7 @@ const SignIn = () => {
         const userRef=await getDoc(doc(db,'users',response.user.uid));
         if(userRef.exists()){
           console.log(userRef.data());
-          dispatch(setUser(userRef.data()));
+          dispatch(setUser(response.user.uid));
           console.log(activeUser);
         }
         navigate('Home');
