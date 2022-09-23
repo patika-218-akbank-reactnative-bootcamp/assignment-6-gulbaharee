@@ -11,14 +11,17 @@ const screenHeight= Dimensions.get('screen').height;
 const Edit = () => {
     const { goBack } = useNavigation();
     const theme = useSelector(state=>state.theme.activeTheme);
+    const activeUser = useSelector(state=>state.activeUser.registeredUser);
+console.log(activeUser);
+
   return (
     <View>
       <Header title="Edit" goback={true} onPress={() => goBack("Profile")} />
       <View
         style={[styles.container, { backgroundColor: theme.backgroundColor }]}
       >
-        <Input placeholder='username'/>
-        <Input placeholder='email'/>
+        <Input placeholder={activeUser.username}/>
+        <Input placeholder={activeUser.email}/>
         <Input placeholder='password'/>
         <Button placeholder='Save'/>
       </View>

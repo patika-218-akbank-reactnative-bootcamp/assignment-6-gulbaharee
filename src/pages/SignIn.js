@@ -8,6 +8,7 @@ import {app} from '../utils/firebase';
 import {useSelector,useDispatch } from 'react-redux';
 import { setUser } from "../store/userSlice";
 import {doc, getDoc,getFirestore} from 'firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screenHeight = Dimensions.get("screen").height;
 
@@ -17,7 +18,7 @@ const SignIn = () => {
   const db = getFirestore(app);
   const dispatch = useDispatch();
   const activeUser = useSelector(state=>state.activeUser.registeredUser);
-
+  const theme = useSelector(state=>state.theme.activeTheme);
   const handleSubmit = () => {
     
     //firebase authentication
@@ -26,10 +27,16 @@ const SignIn = () => {
         const userRef=await getDoc(doc(db,'users',response.user.uid));
         if(userRef.exists()){
           console.log(userRef.data());
-          dispatch(setUser(response.user.uid));
-          console.log(activeUser);
+          dispatch(setUser({activeUser:userRef.data()}));
+          AsyncStorage.setItem(
+            'activeUser',
+            JSON.stringify(
+              userRef.data()
+            )
+          )
         }
         navigate('Home');
+        console.log(activeUser);
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
@@ -47,7 +54,7 @@ const SignIn = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
       <View style={styles.innerContainer}>
         <Input placeholder="username" onChangeText={(text) => (email = text)} />
         <Input

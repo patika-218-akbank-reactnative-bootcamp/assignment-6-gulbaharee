@@ -12,14 +12,7 @@ export const userSlice = createSlice({
         registeredUser: activeUser,
       };
     },
-    addUser: (state, action) => {
-      const newUser = [...state, registeredUser];
-      newUser.push(action.payload);
-      return {
-        registeredUser: newUser,
-      };
-    },
   },
 });
 
-export const { setUser, addUser } = userSlice.actions;
+export const { setUser } = userSlice.actions;

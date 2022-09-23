@@ -4,13 +4,14 @@ import Header from "../components/header";
 import Button from "../components/button";
 import { app } from "../utils/firebase";
 import { getFirestore, collection, setDoc, doc } from "firebase/firestore/lite";
+import {useSelector } from 'react-redux';
 
 const Photos = ({ route }) => {
   const { image } = route.params;
   const db = getFirestore(app);
-
+  const activeUser = useSelector(state=>state.activeUser.registeredUser);
   const sendPhoto = () => {
-    setDoc(doc(db, "users", response.user.uid), {
+    setDoc(doc(db, "users", activeUser.id), {
       image:image,
     });
   };

@@ -1,4 +1,4 @@
 export default{
     type:'light',
-    backgroundColor:'#f8edeb',
+    backgroundColor:'#f8f9fa',
 }
