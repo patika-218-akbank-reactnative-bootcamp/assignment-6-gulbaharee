@@ -1,10 +1,11 @@
 import React from "react";
 import { View,Text } from "react-native";
+import Header from "../components/header";
 
 const Map=()=>{
     return(
         <View>
-            <Text>Map</Text>
+            <Header title="Map"/>
         </View>
     )
 }

@@ -10,9 +10,9 @@ const BottomNavigator=()=>{
 
     return(
         <Tab.Navigator>
-            <Tab.Screen name='SharePhoto' component={SharePhoto}/>
-            <Tab.Screen name='Map' component={Map}/>
-            <Tab.Screen name='Profile' component={Profile}/>
+            <Tab.Screen name='Share Photo' options={{headerShown:false}} component={SharePhoto}/>
+            <Tab.Screen name='Map' options={{headerShown:false}} component={Map}/>
+            <Tab.Screen name='Profile' options={{headerShown:false}} component={Profile}/>
         </Tab.Navigator>
     )
 }

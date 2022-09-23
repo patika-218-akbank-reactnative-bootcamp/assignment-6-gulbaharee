@@ -5,6 +5,8 @@ import Button from "../components/button";
 import { useNavigation } from "@react-navigation/native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import {app} from '../utils/firebase';
+import {useSelector,useDispatch } from 'react-redux';
+import { setUser } from "../store/userSlice";
 
 const screenHeight = Dimensions.get("screen").height;
 
@@ -12,7 +14,15 @@ const SignIn = () => {
   const { navigate } = useNavigation();
   const auth = getAuth(app);
 
+  const dispatch = useDispatch();
+  const user = useSelector(state=>state.user.registeredUser);
+
   const handleSubmit = () => {
+    const user={
+      login:'loggedIn',
+      email,
+      password,
+    };
     //firebase authentication
     signInWithEmailAndPassword(auth,email, password)
       .then(() => {
@@ -29,6 +39,8 @@ const SignIn = () => {
 
         console.error(error);
       });
+      
+      console.log(user.login);
   };
 
   return (

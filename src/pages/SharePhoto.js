@@ -1,10 +1,11 @@
 import React from "react";
 import { View,Text } from "react-native";
+import Header from '../components/header';
 
 const SharePhoto=()=>{
     return(
         <View>
-            <Text>SharePhoto</Text>
+            <Header title="Share Photo"/>
         </View>
     )
 }
